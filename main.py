@@ -1,22 +1,27 @@
+import argparse
 import os
-import sys
 
 from src.rename_transformer import RenameTransformer
 from src.riff_metadata_transformer import RiffMetadataTransformer
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: python main.py <source path> <target path>")
-        sys.exit(1)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("source", metavar="SOURCE_DIR", type=str)
+    parser.add_argument('--restructure', metavar='TARGET_DIR', type=str,
+                        help='Copy files to a new folder structure inside the target directory')
+    parser.add_argument('--add-metadata', action='store_true',
+                        help='Add BPM and Root Note metadata to WAV files (in-place)')
+    args = parser.parse_args()
+
     working_dir = os.getcwd()
-    source_path = sys.argv[1]
-    target_path = sys.argv[2]
+    source_path = args.source
     os.chdir(source_path)
 
-    transformers = [
-        RenameTransformer(target_path),
-        RiffMetadataTransformer(),
-    ]
+    transformers = []
+    if args.restructure:
+        transformers.append(RenameTransformer(args.restructure))
+    if args.add_metadata:
+        transformers.append(RiffMetadataTransformer())
 
     # Collect filenames
     source_filenames = []

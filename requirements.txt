@@ -1,2 +1,3 @@
-pytaglib
+argparse
 numpy
+wave_chunk_parser

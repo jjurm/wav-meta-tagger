@@ -10,9 +10,15 @@ This script reads music samples from one directory and writes them with added ta
 
 * Organises your music samples into a new folder structure (by patter-matching on paths)
 
+Usage:
+
+```bash
+python main.py [-h] SOURCE_DIR [--restructure TARGET_DIR] [--add-metadata]
+```
+
 Sample output:
 ```bash
-$ python main.py Samples Samples_gen
+python main.py Samples --restructure Samples_gen --add-metadata
 ```
 ```
 ---  /Samples/Loops/Cymatics - Oracle Sample Pack/Melodies/Cymatics - Oracle Nostalgic Melody Loop 1 - 97 BPM G# Maj.wav
@@ -26,6 +32,8 @@ $ python main.py Samples Samples_gen
   >  /Samples_gen/Loops/Drum Loops/Ambient/looperman-l-2247732-0267144-hbs-vintage-psychedelica-bonk-110bpm.wav
   + BPM: 110.0 + Tempo-sync
 ```
+
+Running `python main.py DIR --add-metadata` will add metadata to the original files in-place.
 
 Metadata are stored using the RIFF format. More details in the `src/riff_metadata_transformer.py` file.
 
